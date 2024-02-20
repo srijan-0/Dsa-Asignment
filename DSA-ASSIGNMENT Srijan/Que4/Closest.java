@@ -1,26 +1,23 @@
 package Que4;
+public class Closest {
 
-import java.util.Arrays;
-
-public class ClosestToTarget {
-
-    int[] tree;
-    int[] sorted;
-    int index = 0;
+    int[] tree; // given tree
+    int[] sorted; // to store sorted values using inorder traversal
+    int index = 0; // to traverse Array:sorted
 
     int target;
     int num;
-    int[] answer;
+    int[] answer; // to store answer
 
-    int left = 0;// left pointer
-    int right;// right pointer
+    int left = 0; // left pointer
+    int right; // right pointer
 
-    ClosestToTarget(int[] tree) {
+    Closest(int[] tree) {
         this.tree = tree;
         this.right = tree.length - 1;
 
-        sorted = new int[tree.length];// sets the length of sorted tree's array
-        // creates a BST for given tree
+        sorted = new int[tree.length]; // sets the length of sorted tree's array
+        // creates a BST for the given tree
         Node root = null;
         for (int i = 0; i < tree.length; i++) {
             root = insert(root, tree[i]);
@@ -38,14 +35,13 @@ public class ClosestToTarget {
             this.data = data;
             this.left = null;
             this.right = null;
-        }
 
+        }
     }
 
     void setNumber(int k) {
         this.num = k;
         answer = new int[k];
-
     }
 
     Node insert(Node root, int data) {
@@ -54,20 +50,18 @@ public class ClosestToTarget {
             return root;
         }
         if (root.data > data) {
-            root.left = insert(root.left, data);
-
+            root.left = insert(root.left, data); // small data goes to left
         } else {
-            root.right = insert(root.right, data);
+            root.right = insert(root.right, data); // greater goes to right
         }
         return root;
     }
 
-    void inorder(Node root) {
+    void inorder(Node root) {// retrieves sorted data and stores in sorted array
         if (root == null) {
             return;
         }
         inorder(root.left);
-        System.out.print(root.data);
         sorted[index] = root.data;
         index++;
         inorder(root.right);
@@ -98,12 +92,12 @@ public class ClosestToTarget {
 
     public static void main(String[] args) {
         int[] values = { 5, 3, 7, 9, 1 };
-        ClosestToTarget c = new ClosestToTarget(values);
+        Closest c = new Closest(values);
 
         c.setNumber(3);
         c.setTarget(6);
 
         int[] result = c.findClosest();
-        System.out.println(Arrays.toString(result));
+        System.out.println(java.util.Arrays.toString(result));
     }
 }
